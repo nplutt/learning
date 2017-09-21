@@ -1,0 +1,48 @@
+global:
+  - In a browser the top-level scope is the global scope, in node this is different. The top-level
+    scope is not the global scope, creating a variable in a node module will be local to that module.
+
+process:
+
+
+console:
+  - Used to print out stdout and stderr.
+
+buffer class:
+  - Used to handle binary data
+
+require:
+  - This requires modules and isn't actually a global but local to each module.
+
+require.resolve:
+  - Rerurns the resolved file name.
+
+require.extensions:
+  - Instructs require how to handle file extensions. For example you can have .sjs files handled
+    as .js files.
+
+__filename:
+  - The filename path of the code being executed
+
+__dirname:
+  - The directory path of the code being executed
+
+exports:
+  - An object which is shared between all instances of the current module and made accessible through
+    require(). exports() is the same as module.exports, as the same with all other things this is
+    only made accessible to the module and not global.
+
+setTimeout(cb, ms):
+  - Run the callback (cb) function after atleast milliseconds (ms). This will depend on factors like     os timer and granularity of the system load.
+  - Timer cannot be set to more than 24.8 days
+
+clearTimeout(t):
+  - Stops a timeout that was previously set and doesn't execute the callback.
+
+setInterval(cb, ms):
+  - Runs a callback function every milliseconds.
+
+clearInterval(t)
+  - Stop a timer that was previously created with setInterval.
+
+

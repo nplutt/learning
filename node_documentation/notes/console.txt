@@ -1,0 +1,11 @@
+Types:
+- console.log
+- console.info => same as console.log
+- console.error => prints to stderr
+- console.warn => same as console.error
+- console.dir => uses util.inspect and prints resulting string to stdout
+- console.time => Mark a time
+- console.timeEnd => Finish a timer
+- console.trace =>Prints a stack tace to sterr of the current position
+- console.assert => If expression evaluates to false assertion error is thrown with message
+
