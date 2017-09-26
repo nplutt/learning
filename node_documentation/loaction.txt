@@ -1,1 +1,5 @@
-on page 33
+Completed:
+Assertion Testing
+Async Hooks
+
+V8

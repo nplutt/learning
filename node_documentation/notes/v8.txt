@@ -1,0 +1,8 @@
+The v8 module exposes APIs that are specific to the version of V8 built into the nodejs binary.
+It can be accessed by:
+
+```javascript
+const v8 = require('v8');
+```
+
+

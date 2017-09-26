@@ -1,0 +1,6 @@
+Global Scope:
+- Browser: Browser Javascript makes all variables global
+- NodeJS: All variables are local by default. If there is something that needs to be accessed 
+  globally, then it should be explicitly exported.
+
+On Page 26

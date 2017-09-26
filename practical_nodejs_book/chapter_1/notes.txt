@@ -1,0 +1,7 @@
+Using Express.js to Create a Node.js Web Applications
+
+Common Modules:
+- Models:
+    * Mongoose for mongodb
+    * squelizejs for mysql | sqlite | postgres | mssql
+

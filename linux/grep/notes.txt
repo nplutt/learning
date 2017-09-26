@@ -1,0 +1,3 @@
+- Search folder and exlude a directory
+  * `grep -r --exclude-dir node_modules 'foo_bar'`
+
