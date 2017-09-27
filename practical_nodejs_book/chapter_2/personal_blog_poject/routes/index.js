@@ -17,8 +17,8 @@ router.get('/', (req, res, next) => {
       if (err.statusCode === 404) {
         let err = new Error('Not Found');
         err.statusCode = 404;
+        next(err);
       }
-      console.trace(err);
     } else {
       res.send(data.Body.toString());
     }

@@ -1,6 +1,8 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const logHandler = require('./handlers/errorLogging');
+const errorHandler = require('./handlers/errorHandling');
 const index = require('./routes/index');
 
 const app = express();
@@ -11,5 +13,7 @@ app.use(cookieParser());
 
 app.use('/', index);
 
+app.use(logHandler);
+app.use(errorHandler);
 
 module.exports = app;
