@@ -1,0 +1,19 @@
+{
+  "name": "blog-project",
+  "version": "0.0.0",
+  "description": "This is the blog project for chapter 2",
+  "main": "index.js",
+  "scripts": {
+    "start": ". ./config/local/env.sh && node bin/www",
+    "test": "test"
+  },
+  "author": "Nick Plutt",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.123.0",
+    "body-parser": "^1.18.2",
+    "cookie-parser": "^1.4.3",
+    "debug": "^3.1.0",
+    "express": "^4.15.5"
+  }
+}
