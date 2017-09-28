@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const dbUrl = process.env.DB_HOST;
 
-mongoose.connect(dbUrl, { useMongoClient: true });
+const connection = mongoose.createConnection(dbUrl, { useMongoClient: true });
 
 mongoose.connection.on('connected', () => {
   console.log('Connection to mongodb database was successfully established');
@@ -21,3 +21,5 @@ process.on('SIGINT', () => {
     process.exit(0);
   });
 });
+
+module.exports = connection;
