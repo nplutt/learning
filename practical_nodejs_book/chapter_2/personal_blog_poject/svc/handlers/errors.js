@@ -7,28 +7,34 @@ class ExpressError extends Error {
   }
 }
 
-module.exports = class BadRequestError extends ExpressError {
+class BadRequestError extends ExpressError {
   constructor(message) {
     super(message, 400);
   }
-};
+}
 
-module.exports = class UnauthorizedError extends ExpressError {
+class UnauthorizedError extends ExpressError {
   constructor(message) {
     super(message, 401);
   }
-};
+}
 
-module.exports = class ForbiddenError extends ExpressError {
+class ForbiddenError extends ExpressError {
   constructor(message) {
     super(message, 403);
   }
-};
+}
 
-module.exports = class NotFoundError extends ExpressError {
+class NotFoundError extends ExpressError {
   constructor(message) {
     super(message, 404);
   }
-};
+}
 
-module.exports = ExpressError;
+module.exports = {
+  ExpressError: ExpressError,
+  BadRequestError: BadRequestError,
+  UnauthorizedError: UnauthorizedError,
+  ForbiddenError: ForbiddenError,
+  NotFoundError: NotFoundError
+};

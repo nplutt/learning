@@ -1,4 +1,5 @@
 function errorHandler(err, req, res, next) {
+  console.log(err);
   switch(err.statusCode) {
     case 400:
       res.sendStatus(400);

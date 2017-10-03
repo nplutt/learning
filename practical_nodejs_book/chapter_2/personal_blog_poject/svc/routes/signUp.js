@@ -1,14 +1,22 @@
 const express = require('express');
 const router = express.Router();
-const validator = require('validator');
+const User = require('../db/models/user');
+const errors = require('../handlers/errors');
 
 
 router.get('/', (req, res, next) => {
-  if (!validator.isEmail(req.body.email) || !validator.isLength(req.body.password, {min: 8, max:16})) {
-    let error = new Error();
-    error.statusCode = 400;
-    throw error;
-  }
+  const user = new User(req.body);
+  user.save((err) => {
+    if (err) {
+      if (err.type === ValidationError) {
+        next(new errors.BadRequestError())
+      } else {
+        next(new errors.ExpressError())
+        }
+    } else {
+      res.statusCode = 201
+    }
+  })
 });
 
 module.exports = router;
