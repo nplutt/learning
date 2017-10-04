@@ -6,7 +6,7 @@ const errorHandler = require('./handlers/errorHandling');
 const authHandler = require('./handlers/sessionHandler');
 const index = require('./routes/index');
 const signUp = require('./routes/signUp');
-
+const login = require('./routes/login');
 
 const app = express();
 
@@ -17,6 +17,7 @@ app.use(authHandler());
 
 app.use('/', index);
 app.use('/signup', signUp);
+app.use('/login', login);
 
 app.use(logHandler);
 app.use(errorHandler.badRequestErrorHandler);

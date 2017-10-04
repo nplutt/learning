@@ -1,5 +1,5 @@
 function logHandler(err, req, res, next) {
-  console.error(err.stack);
+  console.error(err);
   next(err);
 }
 
