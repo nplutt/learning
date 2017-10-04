@@ -19,6 +19,7 @@ app.use('/', index);
 app.use('/signup', signUp);
 
 app.use(logHandler);
-app.use(errorHandler);
+app.use(errorHandler.badRequestErrorHandler);
+app.use(errorHandler.statusCodeErrorHandler);
 
 module.exports = app;

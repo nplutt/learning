@@ -1,5 +1,18 @@
-function errorHandler(err, req, res, next) {
-  console.log(err);
+function badRequestErrorHandler(err, req, res, next) {
+  if (err.name === 'MongoError') {
+    if (err.message.indexOf('duplicate key error') > -1) {
+      err.statusCode = 400;
+    }
+  }
+
+  if (err.name === 'ValidationError') {
+    err.statusCode = 400;
+  }
+
+  next(err);
+}
+
+function statusCodeErrorHandler(err, req, res, next) {
   switch(err.statusCode) {
     case 400:
       res.sendStatus(400);
@@ -18,4 +31,7 @@ function errorHandler(err, req, res, next) {
   }
 }
 
-module.exports = errorHandler;
+module.exports = {
+  badRequestErrorHandler: badRequestErrorHandler,
+  statusCodeErrorHandler: statusCodeErrorHandler
+};
