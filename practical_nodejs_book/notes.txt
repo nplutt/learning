@@ -3,4 +3,4 @@ Global Scope:
 - NodeJS: All variables are local by default. If there is something that needs to be accessed 
   globally, then it should be explicitly exported.
 
-On Page 43
+On Page 60

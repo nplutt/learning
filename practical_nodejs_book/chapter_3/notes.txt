@@ -1,0 +1,13 @@
+TDD and BDD for Node.js with Mocha
+- TDD: Test driven development
+- BDD: Behavior driven development
+
+TDD is made to do the following:
+- Define a unit test
+- Implement the unit
+- Verify the test passed
+
+BDD is a specialized version of TDD that specifies what needs to be unit tested based on business
+requirememts. 
+
+
