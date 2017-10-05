@@ -8,7 +8,7 @@ function authSession() {
     saveUninitialized: false, // don't create session until something stored
     resave: false, //don't save session if unmodified
     store: new mongoStore({ mongooseConnection: connection }),
-    cookie: { secure: process.env.ENVIRONMENT === 'production' }
+    cookie: { secure: process.env.ENVIRONMENT === 'production', expires: 60000 }
   });
 }
 

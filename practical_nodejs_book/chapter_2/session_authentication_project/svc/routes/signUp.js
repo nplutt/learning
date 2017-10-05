@@ -11,6 +11,7 @@ router.post('/', (req, res, next) => {
     if (err) {
       next(err);
     } else {
+      req.session.email = user.email;
       res.sendStatus(201);
     }
   });
