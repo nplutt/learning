@@ -10,4 +10,13 @@ TDD is made to do the following:
 BDD is a specialized version of TDD that specifies what needs to be unit tested based on business
 requirememts. 
 
+expect.js:
+- ok: checks for truthyness
+- true: checks whether object is truthy
+- to.be: chains methods together
+- not: chains with a not notation
+- a/an: chack type
+- include/contain: checks whether an array or string contains an element
+- below/above: checks for the upper and lower limits
+
 

@@ -1,0 +1,15 @@
+{
+  "name": "test_example",
+  "version": "1.0.0",
+  "description": "Tutorial in chapter 3 on testing",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "expect.js": "^0.3.1",
+    "mocha": "^4.0.0"
+  }
+}
