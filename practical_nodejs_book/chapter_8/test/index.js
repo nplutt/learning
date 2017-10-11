@@ -23,9 +23,8 @@ describe('express rest api server', () => {
     superagent.get(basePath + '/' + id)
       .end((err, res) => {
         expect(err).to.equal(null);
-        expect(res.body.length).to.equal(1);
-        expect(res.body[0]._id.length).to.equal(24);
-        id = res.body[0]._id;
+        expect(res.body._id.length).to.equal(24);
+        id = res.body._id;
         done();
       });
   });
@@ -33,7 +32,7 @@ describe('express rest api server', () => {
   it('retrieves a collection', (done) => {
     superagent.get(basePath)
       .end((err, res) => {
-        expect(err).to.eql(null);
+        expect(err).to.equal(null);
         expect(res.body.length).to.be.above(0);
         expect(res.body.map(function (item){
           return item._id;
@@ -43,34 +42,34 @@ describe('express rest api server', () => {
   });
 
   it('updates an object', (done) => {
-    superagent.put(basePath + id)
+    superagent.put(basePath + '/' + id)
       .send({name: 'James', email: 'james@gmail.com'})
       .end((err, res) => {
-        expect(err).to.eql(null);
-        expect(typeof res.body).to.eql('object');
-        expect(res.body.msg).to.eql('success');
+        expect(err).to.equal(null);
+        expect(typeof res.body).to.equal('object');
+        expect(res.body.msg).to.equal('success');
         done();
       });
   });
 
   it('checks an updated object', (done) => {
-    superagent.get('http://localhost:3000/collections/test/'+id)
+    superagent.get(basePath + '/' + id)
       .end((err, res) => {
-        expect(err).to.eql(null);
-        expect(typeof res.body).to.eql('object');
-        expect(res.body._id.length).to.eql(24);
-        expect(res.body._id).to.eql(id);
-        expect(res.body.name).to.eql('Peter');
+        expect(err).to.equal(null);
+        expect(typeof res.body).to.equal('object');
+        expect(res.body._id.length).to.equal(24);
+        expect(res.body._id).to.equal(id);
+        expect(res.body.name).to.equal('James');
         done();
       });
   });
 
   it('removes an object', (done) => {
-    superagent.del('http://localhost:3000/collections/test/'+id)
+    superagent.del(basePath + '/' + id)
       .end((err, res) => {
-        expect(e).to.eql(null);
-        expect(typeof res.body).to.eql('object');
-        expect(res.body.msg).to.eql('success');
+        expect(err).to.equal(null);
+        expect(typeof res.body).to.equal('object');
+        expect(res.body.msg).to.equal('success');
         done();
       });
   });
