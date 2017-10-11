@@ -1,0 +1,22 @@
+{
+  "name": "chapter_8",
+  "version": "0.0.1",
+  "description": "Chapter 8 examples and notes",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test -R spec"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "mongoose": "^4.12.1",
+    "morgan": "^1.9.0"
+  },
+  "devDependencies": {
+    "expect.js": "^0.3.1",
+    "mocha": "^4.0.1",
+    "superagent": "^3.6.3"
+  }
+}
