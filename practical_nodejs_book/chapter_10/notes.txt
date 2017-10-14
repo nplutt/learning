@@ -1,0 +1,38 @@
+Making Node.js Apps Production Ready
+
+Environment Variables
+- All api keys, passwords, and database uri's are best stored in environment variables
+
+Express.js
+- Use if else statements to check the NODE_ENV values
+- Don't use in memeory session stores
+
+Socket.io
+- Use configure method to define different rules per environment
+- Ofen a websocket's data is stored in a high performance database such as redis
+
+Error Handling
+- Have a way to catch all errors
+- Use the core node.js domain module to help with handling errors. This will help with tracking down
+  and debugging errors when they happen.  In express, these domains can be added do error prone 
+  routes. 
+
+Multithreading with Cluster
+- The coreCluster allows many nodejs processes to be spawned on a single system to handle loads. 
+  These individual processes use the same source code and can listen on the same port. Typically
+  each process uses one of the master CPU's cores. There is a master process that spawns all other
+  processes and in a way controls then (can kill, restart and so on).
+
+Multithreading with Cluster2
+- Cluster2 was created by ebay and makes large scale deployments and mangement easier
+
+Event Logging and Monitoring
+- Having a dashboard that displays the following can be very useful:
+  * memory usage information
+  * uptime: number of seconds that the nodejs process has been running
+  * pid: process ID
+  * connections: number of connections
+  * loadavg: average load
+  * sha: sha of the git commit that is deployed
+- Use winston library for better logging
+

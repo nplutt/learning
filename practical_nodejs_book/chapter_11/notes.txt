@@ -1,0 +1,6 @@
+Deploying Node.js Apps
+
+Keeping Node.js Alive With Forever, Upstart, and init.d
+- forever: module that allows us to stert node.js apps as daemons and keeps them running. If a process dies, then it will just be restarted.
+
+
