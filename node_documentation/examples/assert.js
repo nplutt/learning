@@ -25,6 +25,9 @@ const object4 = {
   }
 };
 
+let b = 'hello';
+
+
 // deepEqual
 
 //assert.deepEqual(object1, object3); // passes
