@@ -25,7 +25,10 @@ def run():
 
 if __name__ == '__main__':
     """
-    The keys() method of a dict returns a keys-view object that
+    Problem: You have two dictionaries and want to
+    find out what they might have in common.
+    
+    Notes: The keys() method of a dict returns a keys-view object that
     exposes the keys. They also support unions, intersections,
     and differences.
     """
