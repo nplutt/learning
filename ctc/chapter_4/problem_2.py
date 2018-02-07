@@ -6,17 +6,24 @@ class Node(object):
 
 
 def get_pivot(length):
-    return length // 2 if length % 2 == 0 else length // 2 + 1
+    if length == 1:
+        return 0
+
+    return length // 2 + length % 2
 
 
 def bst(arr, start=None, end=None):
-    if start is None:
-        start = 0
-    if end is None:
-        end = len(arr)
+    if start == end:
+        return None
 
     mid = start + get_pivot(end - start)
     node = Node(arr[mid])
     node.left = bst(arr, start, mid)
     node.right = bst(arr, mid + 1, end)
+
     return node
+
+
+if __name__ == '__main__':
+    arr = [1, 3, 6, 7, 9, 10, 15, 16, 20]
+    print(bst(arr, 0, len(arr)-1))
