@@ -1,7 +1,7 @@
-#Monitoring & Reporting
+# Monitoring & Reporting
 
-##CloudWatch Introduction
-####Host Level Metrics
+## CloudWatch Introduction
+#### Host Level Metrics
 * CPU
 * Network
 * Disk
@@ -11,7 +11,7 @@ Exam Tip: RAM utilization is a custom metric. By default EC2 monitoring is 5 min
 intervals, unless you enable detailed monitoring which will then make it 1 min
 intervals.
 
-####How Long are CloudWatch Metrics Stored?
+#### How Long are CloudWatch Metrics Stored?
 You retrieve data using the GetMetricStatistics API or by using third party tools
 offered by AWS partners
 
@@ -22,21 +22,21 @@ retention for each group at any time.
 You can retrieve data from any terminated EC2 or ELB instance after it has been
 terminated.
 
-####Metric Granularity
+#### Metric Granularity
 It depends on the AWS service. Many default metrics for many services is 1 min,
 but it can be 3 min or 5 min depending on the service.
 
 For custom metrics the min granularity you can have is 1 min.
 
-####CloudWatch Alarms
+#### CloudWatch Alarms
 You can create alarms to monitor any metrics in your account. You can set 
 thresholds and trigger alarms.
 
-####Exam Tips
+#### Exam Tips
 CloudWatch can be used on premise as well. You just need to download the SSM
 agent and CloudWatch agent.
 
-##Monitoring EC2 With Custom Metrics
+## Monitoring EC2 With Custom Metrics
 We can create an EC2 instance, with the below script as the startup script. Once
 the EC2 instance has been created, we can SSH into the system, and run the 
 commented out commands to make the EC2 instance push metrics to CloudWatch
@@ -64,7 +64,7 @@ rm -rf CloudWatchMonitoringScripts-1.2.2.zip
 #   */1 * * * * root /home/ec2-user/aws-scripts-mon/mon-put-instance-data.pl --mem-util --mem-used --mem-avail
 ```
 
-##Monitoring EBS
+## Monitoring EBS
 
 #### EBS - Different Volume Types
 4 Different Types of EBS Storage;
@@ -112,7 +112,7 @@ The bigger the volume the more performance you get. If you need a 6000 IOPS,
 you'll need to make sure the volume size is large enough. In this case
 the drive would need to be 3000 GiB in order to receive 6000 IOPS.
 
-####I/O Credits
+#### I/O Credits
 When your volume requires more than the baseline performance of I/O level, it
 simply uses I/O credits in the credit balance to burst to the required performance
 level, up to a maximum of 3,000 IOPS.
@@ -122,7 +122,7 @@ level, up to a maximum of 3,000 IOPS.
 * When you are not going over your provisioned IO level you will be earning 
 credits
 
-####Pre-Warming EBS Volumes
+#### Pre-Warming EBS Volumes
 New EBS volumes receive their maximum performance the moment that they are
 available and do not require initialization (formerly known as pre-warming).
 However storage blocks on volumes that were restored from snapshots must be 
@@ -137,7 +137,7 @@ all of the blocks on your volume before you use it; this process is called
 initialization. For a new volume created from a snapshot, you should read all
 the blocks that have data before using the volume.
 
-####EBS CloudWatch Metrics
+#### EBS CloudWatch Metrics
 * VolumeReadOps & VolumeWritOps: The total number of I/O operations in a 
 specific period of time. **Note**: to calculate the average I/O per second
 for the period, divide the total operations in the period by the number
@@ -146,7 +146,7 @@ of seconds in that period.
 completed in a specific time period. **note**: you want this to be 0, if it's not
 it means that you're maxing out your IOPS.
 
-####Volume Status Checks
+#### Volume Status Checks
 * ok: Normal
 * Warning: Degraded (performance is below expected) or severely degraded 
 (volume performance is well below expected)
@@ -154,7 +154,7 @@ it means that you're maxing out your IOPS.
 (unable to determine I/O performance because I/O is disabled)
 * insufficient data: insufficient data
 
-####Modifying EBS Volumes
+#### Modifying EBS Volumes
 If your EBS volume is attached to a current generation EC2, tou can increase it's
 size, change the volume type, or ()for an io1 volume) adjust it's IOPS performance,
 all without detaching it. 
@@ -163,7 +163,7 @@ all without detaching it.
 * If the size of the volume was modified, extend the volume's file system to 
 take advantage of the increased storage capacity
 
-####Exam Tips
+#### Exam Tips
 * Remember EBS types
 * Remember when to use each type
 * General purpose SSD burst
@@ -171,24 +171,24 @@ take advantage of the increased storage capacity
 volume queue length
 * Remember the volume status checks
 
-##Monitoring ELB
+## Monitoring ELB
 
-####ELB - Load Balancer Types
+#### ELB - Load Balancer Types
 * Application load balancer
 * Network load balancer
 * Classic load balancer
 
-####ELB - Monitoring Types
+#### ELB - Monitoring Types
 * CloudWatch metrics
 * Access logs
 * Request tracing
 * CloudTrail logs
 
-####CloudWatch VS CloudTrail
+#### CloudWatch VS CloudTrail
 * CloudWatch monitors performance
 * CloudTrail monitors API calls in the AWS platform
 
-####CloudWatch Metrics
+#### CloudWatch Metrics
 Elastic Load Balancing publishes data points to CloudWatch for your load balancers
 and your targets. CloudWatch enables you to retrieve statistics about those data
 points as an ordered set of time-series data, known as metrics. Think of a metric
@@ -197,7 +197,7 @@ time. For example, you can monitor the total number of healthy targets for a
 load balancer over a specific time period. Each data point has an associated time
 stamp and an optional unit of measurement.
 
-####Access Logs
+#### Access Logs
 Elastic load balancing provides access logs that capture detailed information 
 about requests sent to your load balancer. Each log contains information such as
 the time the request was received, the client's IP address, latencies, request 
@@ -209,7 +209,7 @@ enable access logging for your load balancer, ELB captures the logs and stores
 them in an S3 bucket that you specify as zip files. You can disable logging at
 any time.
 
-####Access Logs - SUPER IMPORTANT
+#### Access Logs - SUPER IMPORTANT
 Access logs can store data where the EC2 instance has been deleted. For example
 say you have a fleet of EC2 instances behind an autoscaling group. For some 
 reason your application has a load of 5XX errors which is only reported by your
@@ -217,27 +217,27 @@ end customers a couple of days after the event. If you aren't storing the web
 server logs anywhere persistent, it is still possible to trace these 5XX errors
 using access logs which would be stored in S3.
 
-####Request Tracing
+#### Request Tracing
 You can use request tracing to track HTTP requests from clients to targets or 
 other services. When the load balancer receives a request from a client, it 
 adds or updates the `X-Amzn-Trace-Id` header before sending it on to the request
 target. Any services between the load balancer and the target can update this 
 value as well.
 
-####CloudTrail
+#### CloudTrail
 You can use it to capture detailed information made to your ELB API and store them
 as log files in S3. You can track which calls are made, source IP, who made the
 call, when the call was made, and so on.
 
 
-##Monitoring Elasticache
+## Monitoring Elasticache
 
-####Elasticache
+#### Elasticache
 Two main engines
 * Memcached
 * Redis
 
-####Monitoring
+#### Monitoring
 CPU Utilization:
 * Memcached
   - Multi-threaded
@@ -282,7 +282,7 @@ Concurrent Connections:
   this can either mean a large traffic spike of your application is not releasing
   connections as it should be.
 
-####Exam Tips
+#### Exam Tips
 * Remember the 2 different caching engines
 * Remember the 4 important things to monitor
 
