@@ -301,3 +301,185 @@ you to receive an email when your bill crosses a certain dollar threshold.
 ## AWS Organizations
 
 #### What is AWS Organizations
+AWS Organizations allows you to manage multiple AWS accounts at once. With
+organizations, you can create groups of accounts and then apply policies to 
+those groups.
+
+Allows you to do:
+* Centrally manage policies across multiple accounts
+* Control access to AWS services
+* Automate account creation and management
+* Consolidate billing across multiple accounts
+
+#### What Does AWS Organizations do?
+Central Management
+* You can create groups aof accounts, and the attach policies to a group to
+ensure thr correct policies are applied across the accounts. It also enables
+you to centrally manage policies across multiple accounts without requiring 
+custom scripts and manual processes.
+
+Control Access
+* You can create service control policies (SCPs) that centrally control AWS 
+service across multiple AWS accounts. You can specifically allow or deny 
+individual AWS services. For example you could deny the use of kinesis or
+DynamoDB yo your HR group within your AWS organization. Even if IAM in that 
+account allows for it, SCP will override it.
+
+Automate AWS Account Creation:
+* You can use the AWS Organizations API to automate the creation and management
+of new AWS accounts. The Organizations APIs enable you to create new accounts  
+programmatically, and to add the new accounts to a group. The policies attached
+to the group are automatically applies to the new account.
+
+Consolidate Billing:
+* You can set up a single payment method for all the accounts in your organization
+through consolidated billing. With consolidated billing, you can see a combined
+view of charges incurred by all your accounts as well as take advantage of 
+pricing benefits from aggregated usage, such as volume discounts for EC2 & S3.
+
+#### Exam Tips
+Remember what an Organization is:
+* Centrally managed policies across multiple accounts
+* Control access to AWS services
+* Automate AWS account creation and management
+* Consolidated Billing across multiple accounts
+
+## Tagging & Resource Groups
+
+#### What are tags?
+* KV pairs attached to resources
+* Metadata (data about data)
+* Tags can sometimes be inherited
+  - Autoscaling, Cloudformation, and ELB can create resources
+
+#### What are resource groups
+* Make it easier to group your resources using the tags that are assigned to 
+the. You can group resources to that share one or more tags.
+* Contain info such as:
+  - Region
+  - Name
+  - Health Checks
+* Specific information:
+  - For EC2 - Public & private IPs
+  - For ELB - Port configs
+  - For RDS - Database engine etc
+
+#### AWS Resource Groups
+AWS Resource Groups
+* Classic resource groups
+  - Across the world or on a per region basis
+* AWS systems manager
+  - Allows you to execute commands across your resource groups
+  - Can also get insights into resources as well
+
+#### Exam Tips
+* You should tag just about everything
+* When you do tag stuff, you can create resource groups
+* Look at AWS Resource Groups section
+
+## EC2 Pricing - Refresher
+
+#### On Demand
+* Users that want low cost and flexibility of EC2 without any up-front payment 
+or long term commitment
+* Applications with short, spiky, or unpredictable workloads.
+* Applications being developed or run in AWS for the 1st time.
+
+#### Reserved
+* Apps with steady state or predictable usage
+* Apps that require reserved capacity
+* Users able to make upfront payments to reduce total compute costs even further.
+  - Standard RI's (Up to 75% off on demand)
+  - Convertable RI's (Up to 54% off on demand) capability to change the attributes
+  of the RI as long as the exchange results in the creation of Reserved instances
+  of equal or greater value.
+  - Scheduled RI's available to launch within the time windows you reserve. This 
+  option allows you to match your capacity reservation to a predictable 
+  recurring schedule that only requires a fraction fo a day, week, or month.
+
+#### Spot
+* Apps that have flexible start and end times
+* Apps that are only feasible at very low compute pricing
+* Users with urgent compute needs for large amounts of additional capacity
+
+#### Dedicated Hosts
+* Useful for regulatory requirements that may not support multi-tenant 
+virtualization
+* Great for licensing which doesn't support mult-tenancy or cloud deployments
+* Can be purchased on demand
+* Can purchase reserved instances for up to 70% off
+
+#### Exam Tips
+Remember EC2 Options
+* On Demand: allows you to pay a fixed rate per hour or by second with no commitment
+* Reserved: provide you with a capacity reservation, and offer a significant 
+discount on the hourly charge for an instance. 1 or 3 year terms.
+* Spot: enable you to bid whatever price you want for instance capacity, providing
+for even greater savings if your applications have flexible start and end times.
+* Dedicated Hosts: physical EC2 server dedicated for your use. Can help you
+reduce costs by allowing you to use your existing server-bound software licences.
+
+## AWS Config 101
+
+#### AWS Config
+AWS Config is a fully managed service that provides you with an AWS resource
+inventory, config history, and config notifications for security and governance.
+
+Enables:
+* Compliance auditing
+* Security analysis
+* Resource tracking
+
+Provides:
+* Config snapshots and logs config changes or AWS resources
+* Automated compliance checking
+
+Key Components:
+* Config dashboard
+* Config Rules
+  - Managed
+  - Custom
+* Resources
+* Settings
+
+What can we see:
+* Resource type
+* Resource ID
+* Compliance
+* Timeline
+  - Configuration details
+  - Relationships
+  - Changes
+  - CloudTrail events
+  
+Compliance Checks:
+* Trigger
+  - Periodic
+  - Config snapshot delivery
+* Managed rules
+  - About 40
+  - Basic, but fundamental
+
+#### How Does it Work
+Any time something changes an event it sent to AWS config, the event is then logged
+to an S3 bucket. From there you can have a lambda that is triggered by that event,
+or you can have lambda occasionally check the logs.
+
+Lambda can respond with an error and AWS config can then send an SNS notification.
+
+#### Terminology 
+* Configuration Items:
+  - Point in time attributes of resources
+* Configuration Snapshots:
+  - Collection of config items
+* Configuration Stream:
+  - Stream of changed config items
+
+#### 
+
+
+
+ 
+
+ 
+
