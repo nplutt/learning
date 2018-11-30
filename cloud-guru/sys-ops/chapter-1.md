@@ -475,11 +475,40 @@ Lambda can respond with an error and AWS config can then send an SNS notificatio
 * Configuration Stream:
   - Stream of changed config items
 
-#### 
+#### AWS Config Lab
+* Config is regional
+* A way of recording your AWS environment 
+* Add config rules (e.g. add a rule that notifies you if an instance's ssh is 
+open to the wold)
+* Displays all of your AWS resources
+* Can view changes to security groups and the time that the change happened
+* If an auditor needs to look at what your environment looked like a couple
+weeks ago you'll use AWS Config. If you need to see who provisioned an EC2 
+instance, you'll use CloudTrail. If you need to see the CPU utilization
+of an EC2 instance from 2 weeks ago, you'll use CloudWatch.
+
+#### Exam Tips
+* Look at compliance checks above in notes
+* Restrict access:
+  - Users need to have correct IAM policies to access Config
+  - Only Admins setting up and managing Config need full access
+  - Provide read only permissions to Config
+
+## CouldWatch VS CloudTrail VS Config
+
+#### Exam Tips
+* CloudWatch monitors performance
+* CloudTrail monitors API calls in the AWS platform
+* Config records the stat of your AWS environment and can notify you of changes
+
+## Health Dashboards
+
+#### Exam Tips
+* Service Health Dashboard: shows the health of each AWS Service as a whole per
+region
+* Personal Health Dashboard: provides alerts and remediation guidance when AWS
+is experiencing events that may impact you
 
 
 
- 
-
- 
 
