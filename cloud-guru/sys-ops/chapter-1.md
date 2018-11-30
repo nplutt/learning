@@ -286,3 +286,18 @@ Concurrent Connections:
 * Remember the 2 different caching engines
 * Remember the 4 important things to monitor
 
+## CloudWatch Custom Dashboards
+
+#### Exam Tips
+* Dashboards are international
+* Add widgets on a per region basis
+
+## Creating A Billing Alarm
+
+#### Exam Tips
+* Create alarms under alarms and select billing in CloudWatch. This will allow
+you to receive an email when your bill crosses a certain dollar threshold.
+
+## AWS Organizations
+
+#### What is AWS Organizations
