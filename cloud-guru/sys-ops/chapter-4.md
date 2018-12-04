@@ -287,7 +287,7 @@ CloudHSM
 Free tier
 * Allows you to generate, store and manage your encryption keys
 * HSM is under your exclusive control within your VPC
-* FIPS 140-2 Level 3 comliance (US GOvernment for HSMs) - includes tamper-evident 
+* FIPS 140-2 Level 3 compliance (US Government for HSMs) - includes tamper-evident 
 physical security mechanisms
 * Suitable for applications which have a contractural or regulatory requirement 
 for dedicated hardware managing cryptographic keys
@@ -315,3 +315,155 @@ time
 * If you have registered your AMI in us-east-1 and you want to use it to launch
 instances in eu-west-1, you need to copy it ot eu-west-1 to use it.
 * If you can't find an AMI in a region it might need to be copied there
+
+## Sharing AMIs
+
+#### Sharing AMIs
+* After creating an AMI, you can either keep it private, share it with a 
+specified list of AWS accounts, make it publicly available or even sell it on
+the market place
+* Sharing account still controls the AMI, as well as still pays for storage
+of AMI
+
+#### Copying AMIs
+* The owner of the source AMI must grant you read permissions for the storage 
+that backs the AMI
+* If you cpy an AMI that was shared with you, you are then the owner of that 
+copy and will be charged for the storage of the target AMI in the destination 
+region
+
+Limitations:
+* Cannot directly copy and encrypted AMI shared by another account
+  - Copy the snapshot and re-encrypt using your own key
+  - The sharing account must also share with you the underlying snapshot and 
+  encryption key used to create the AMI
+  - You'll own the copied snapshot and can register it as a new AMI
+* You cannot directly copy and AMI with an associated billingProducts code (
+applies to Windows, RedHeat abd AMIs from AWS Marketplace)
+* BillingProducts code is used to bill for the use of an AMI
+* Launch an EC2 instance using the shared AMI and create an AMI from the shared
+instance
+
+#### Exam Tips
+* AMIs can be shared & copied between user accounts
+* Remember 2 restrictions:
+  - Encrypted AMIs
+  - Copy the underlying snapshot, re-encrypt using your own key and create a new
+  AMI
+  - AMIs with an associated billingProducts code
+  - Launch an EC2 instance using the shared AMI and create an AMI from the 
+  instance
+  
+## Snowball & Snowball Edge
+
+#### What is snowball
+* Snowball is a physical device used for transporting many terabytes or petabytes
+of data into and out of AWS
+* Makes large scale data transfers, fast easy and secure
+* Tamper resistant enclosure
+* 256 bit encryption
+* Region specific transfers (not for moving data from 1 region to another)
+
+How does it work?
+* Connect to local network
+* Snowball client auto encrypts and copies the data from network to location
+* Notified when it's back at amazon
+
+#### When to Use Snowball
+* Have many TB or PB of data
+* You don't want to make upgrades to your network for a 1 time thing
+* If you frequently experience backlogs of data
+* You're in an isolated location
+* Use if it takes more than one week to upload your device
+
+#### What is snowball edge
+* Each one had 100TB device, which also features onboard compute power which can
+be clustered together to act as a single storage & compute pool
+* Designed to undertake local processing / edge computing as well as data transfer
+* S3 compatible endpoint, supports NFS, and can also run AWS lambda functions 
+as data is copied to the device
+* S3 buckets and lambda functions come pre-configured on device
+
+## Storage Gateway
+
+#### What is storage gateway?
+Consists of an on-premise software appliance which connects with AWS cloud-based
+storage to give you a seamless and secure integration between your on-premises IT
+environments and AWS.
+* Storage gateway virtual appliance is installed in your data center
+* Supports VMware ESXi ot Microsfot Hyper-V
+* On-premises systems seamlessly integrate with AWS storage - e.g. S3
+
+#### Types of Storage Gateway
+* File Gateway - NFS / SMB
+* Volume Gateway (iSCSI)
+  - Stored volumes
+  - Cached volumes
+* Tape Gateway
+
+#### File Gateway
+* Files stored as objects in S3 buckets
+* Accessing using NFS or SMB mount point
+* To your on premises systems this appears like a file system mount backed by S3
+* All the benefits of S3: bucket policies, S3 versioning, lifecycle management,
+replication, etc
+* Low cost alternative to on premises storage
+
+
+#### Volume Gateway
+* Provides cloud backed storage using the iSCSI protocol
+* 2 different gateway types:
+  - Gateway Stored Volumes: store all your data locally and only backup to AWS
+  * Gateway Cached Volumes: Use S3 as your primary storage and cache frequently
+  accessed data in your storage gateway
+* Stored Volumes: Stores all data locally, so your applications get low latency
+access to the entire data set
+* You need your own storage infrastructure as all data is stored locally in your
+data center
+* Provides durable off site async backups in the form of EBS backups that are 
+stored in S3
+
+#### Cached Volumes
+* Cached volumes: the gateway stores all your data in S3 and cached only frequently
+accessed storage
+* You need only enough local storage capacity to store the frequently accessed
+data
+* Applications still get low latency access to frequently used data without a 
+large investment in on-premises storage
+
+#### Tape Gateway
+* Is a virtual tape library which provides cost effective data archiving in the 
+cloud using Glacier
+* You don't need to invest in your own tape backup infrastructure
+* Integrates with existing tape backup infrastructure 
+* Data is stored on virtual tapes which are stored in Glacier and accessed using
+VTL
+
+#### Exam Tips
+* File gateway: flat files stored on S3, accessed using NFS or SMB
+* Volume gateway - 2 types:
+  - Stored volumes: entire dataset stored on site, backed up to S3 as EBS snapshots
+  - Cached volumes: entire dataset stored in S3, only frequently access data
+  cached on site
+* Tape Gateway - VTL
+  - Used for archiving your backups to Glacier
+  * Can be used with or without your own backup application
+
+## Athena
+
+#### What is Athena
+* An interactive query service that enables you to analyse and query data located
+in S3 using standard SQL
+* Serverless, nothing to provision, pay per query / per TB scanned
+* No need to setup complex ETL processes
+* Works directly with data stored in S3
+
+#### Use cases
+* Query log files stored in S3
+* Generate business reports
+* Analyse AWS cost and usage reports
+* Run queries on click stream data
+
+#### Exam Tips
+* Remember what it is and what it allows you to do
+
