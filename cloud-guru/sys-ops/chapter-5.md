@@ -239,20 +239,127 @@ manager API or Amazon SDKs.
 ## Systems Manager Parameter Store
 
 #### AWS Systems Manager Parameter Store
-* You work for a bank as a systems admin. You need to store confidential info
-such as users, passwords, licence keys etc. This info needs to be passed to EC2
-as a bootstrap script, while maintaining confidentiality of the information.
-
-You would do this using the Systems Manager Parameter Store
-
-#### Exam Tips
-* Store confidential info in parameter store
-* You can store the data in plain text or encrypt it 
-* You can reference these values by name
+ 
 * You can use this with EC2, CloudFormation, Lambda, or EC2 Run Command
 
-## Securing S3 Using Pre-Signed URLs
+## Inspector VS Trusted Advisor
+
+#### What is Inspector?
+It is a automanted security assessment service that helps improve the security
+and compliance of applications deployed on AWS. It also automatically assesses
+applications for vulnerabilities or deviations from best practices. After 
+performing an assessment, it will produce a detailed list of security findings
+prioritized by level of severity. These findings can be reviewed directly or as
+part of a detailed assessment reports which are available via the console or API.
+
+#### How does it work?
+* Create "Assessment target"
+* Install agents on EC2 instances
+* Create "Assessment template"
+* Perform "Assessment run"
+* Review "Finding" against "Rules"
+
+#### What is Trusted Advisor?
+An online resource to help reduce costs, increase performance, and improve
+security by optimizing your AWS environment. Advisor will advise you on Cost
+Optimization, Performance, Security, Fault Tolerance.
+* Core checks and recommendations
+* Full trusted advisor: business and enterprise companies only
+
+#### Exam Tips
+Inspector:
+* Rules packages
+  - Common vulnerabilities and exposures
+  - CIS operating system security configuration benchmarks
+  - Security best practices
+  - Runtime behavior analysis
+* Severity levels for inspector
+  - High
+  - Medium
+  - Low
+  - Informational
+* What will inspector do?
+  - Monitor network, file systems, and process activity within the specified targets
+  - Compare what it sees to security rules
+  - Report on security issues observed within target during run
+  - Report findings and advise remediation
+* It will not:
+  - Relieve you of your responsibility under the shared responsibility model
+  - Perform miracles
+Trusted Advisor:
+* Cost optimization
+* Availability
+* Performance
+* Does security as well
+
+## Shared Responsibility Model
+
+#### What is the Shared Responsibility Model?
+While AWS manages security of the cloud, security in the cloud is the responsibility
+of the customer. Customers retain control of what security they choose to implement
+to protect their own content, platform, applications, systems and networks, no 
+differently than they would in an on-site data center.
+
+AWS Security Responsibilities:
+* Global infrastructure
+* Hardware, software, network, and facilities
+* "managed services"
+
+Customer Security Responsibilities:
+* Infrastructure as a Service (IaaS)
+* Include updates and security patches
+* Configuration of the AWS provided firewalls
+
+The model changes for the different service types:
+* Infrastructure Services: This category includes compute services such as EC2, EBS,
+Auto Scaling, and VPC. With these services, you can architect and build a cloud 
+infrastructure using tech similar and largely compatible with on-premises solutions.
+You control the OS, you configure and operate any identity management system that
+provides access to the user layer of the virtualization stack.
+* Container Services: Services in this category typically run on separate EC2 or 
+other infrastructure instances, but sometimes you don't manage the OS or the 
+platform layer. AWS provides a manages service for these application "containers".
+You are responsible for setting up and managing network controls, such as firewall
+rules, and for managing platform-level identity and access management separately 
+from IAM. Examples of container services include RDS, EMR, & Elastic Beanstalk.
+* Abstracted Services: This category includes high-level storage, database, and 
+messaging services, such as S3, Glacier, DynamoDB, SQS, SES. These services 
+abstract the platform or management layer on which you can build and operate cloud
+applications. You access the endpoints of these services using AWS APIs, and AWS 
+manages the underlying service components or OS on which they reside.
+
+## Other Security Aspects
+
+#### Security Groups
+* They are stateful, this means that if you open up a port for inbound traffic,
+it automatically opens it up to leave as well.
+* Need to be able to read subnet rules
+
+#### Who Keeps Provisioning Stuff?
+How do you know who is provisioning EC2 instances in a certain account?
+* You have cloudtrail turned on, but have 1000's of developers using the account
+* You can use Athena to query logs stored in S3
+
+#### AWS Artifact
+Provides on demand downloads of AWS security compliance documents, such as AWS ISO
+certifications, PCI, and SOC reports. You can submit the security and compliance 
+docs to your auditors or regulators to demonstrate the security and compliance of 
+the AWS infrastructure and services that you use.
+
+#### CloudHSM vs KMS
+Need to know the differences!!!!
+
+#### Instant Encryption
+Instant Encryption
+* S3
+
+Encryption with Migration
+* RDS
+* DynamoDB
+* EBS
+* EFS
 
 #### 
+
 
 
