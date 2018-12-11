@@ -358,8 +358,3 @@ Encryption with Migration
 * DynamoDB
 * EBS
 * EFS
-
-#### 
-
-
-
