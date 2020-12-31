@@ -156,6 +156,238 @@ this object at a time. If I get two requests I'll have to process them in order
 Example use would be to serve up a PHP web app across a fleet of servers.
 
 ## Amazon Storage Gateway
+* Virtual machine that you run on-premises with VMWare or HyperV or via specifically configured Dell hardware appliance
+* Provides local storage resources backed by AWS S3 and Glacier
+* Often used in disaster recovery preparedness to sync to AWS
+* Useful in cloud migrations
+
+Multiple modes:
+* File Gateway: Exposes volumes as NFS or SMB and allows on-prem EC2 instances to store objects in S3 via NFS or SMB mount point
+* Volume Gateway Stored Mode / Gateway-stored Volumes: Exposes volumes via iSCSI interface and allows for asycn replication of on-prem data to S3
+* Volume Gateway Cached Mode / Gateway-cached Volumes: Exposes volumes via iSCSI interface and allows for primary data stored in S3 with frequently accessed data to be cached locally on prem.
+* Tape Gateway / Gateway-virtual Tape Library: Exposes volumes via iSCSI interface and allows for virtual media changer and tape library for use with existing backup software
 
 
+## EC2 Databases
+* Run any database with full control and ultimate flexibility
+* Must manage everything like backups, redundancy, patching, scale
+* Good option if you require a database not yet supported by RDS such as IBM DB2 or SAP HANA
+* Good option if it is not feasible to migrate to AWS-managed database
 
+
+## RDS
+* Managed database option for MySQL, Maria, PostgreSQL, Microsoft SQL Server, Oracle, and MySQL compatible Aurora
+* Best for structured, relational data store needs
+* Aims to be a drop in replacement for existing on-prem instances of same databases
+* Automated backups and patching in customer defined maintenance windows
+* Push button scaling, replication and redundancy
+
+#### Anti-Patterns
+| If you need... | Don't use RDS, instead use... |
+| -------------- | ----------------------------- |
+| Lots of large binary objects (BLOBS) | S3 |
+| Automated scalability | DynamoDB |
+| Name/Value data structure | DynamoDB |
+| Data is not well structured or unpredictable | DynamoDB |
+| Other database platforms like IBM DBS or SAP HANA | EC2 |
+| Complete control over the database | EC2 |
+
+
+## DynamoDB
+* Managed multi-az NoSQL data store with cross region replication option
+* Defaults to eventual consistency reads but can request strongly consistent read via SDK parameter
+* Priced on throughput, rather than compute
+* Provisioned read and write capacity in anticipation of need
+* Autoscale capacity adjusts per configured min/max levels
+* On-Demand Capacity for flexible capacity at a small premium cost
+* Achieve ACID compliance with DynamoDB Transactions
+
+#### Relations vs NoSQL
+Relational databases are best when the data is in a "relational structure". 
+A NoSQL db excels at Name Value pairs with a self contained record.
+
+Name Value pair -> Attribute
+Item -> Whole collection of name and values
+Many Items -> come together to form a table
+
+#### Partition Key
+* Must be unique
+* Creates a hash from this value which is used to determine what partition the item is stored in
+* Can use a composite primary key known as a partition key and sort key. We can have occurences of the same partition key 
+so long as the sort key is different. Useful when pulling back data based on a sort key, eg. by date.
+
+#### Secondary Indexes
+| Index Type | Description | How to Remember |
+| ---------- | ----------- | --------------- |
+| Global Secondary Index | Partition key and sort key can be different from those on the table | I'm not restricted to just the partitioning set forth by the partition key. I'm global baby. |
+| Local Secondary Index | Same partition key as the table but different sort key | I have to stay local and respect the table's partition key, but I can choose whatever sort key I want.
+
+* There is a limit to the number of indexes and attributes per index
+* Indexes take up storage space
+
+| Index Type | When to Use | Example |
+| ---------- | ----------- | ------- |
+| Global Secondary Index | When you want a fast query of attributes outside the primary key = without having to do a table scan | "I'd like to query sales orders by customer number rather than sales order number" |
+| Local Secondary Index | When you already know the partition key and want to quickly query on some other attribute | "I have the sales order number, but I'd like to retrieve only those records with a certain material number" |
+
+| If you need to ... | Consider... | Cost | Benefit |
+| ------------------ | ----------- | ---- | ------- |
+| access just a few attributes the fastest way possible | project just those few attributes in a global secondary index | mimimal | lowest possible latency access for non-key items |
+| frequently access some non-key attributes | projecting those attributes in a global secondary index | moderate; aim to offset cost of table scans | lowest possible latency access for non-key items |
+| frequently access most non-key attributes | projecting those attributes or even the entire table in a global secondary index | up to double | maximum flexibility |
+| rarely query but write or update frequently | projecting keys only for the global secondary index | minimal | very fast write or updates for non-partition-key items |
+
+## Redshift
+* Fully managed, cluster petabytes scale data warehouse
+* Extremely cost effective  as compared to some other on-premises data warehouse platforms
+* PostgreSQL compatible with JDBC and ODBC drivers available; compatible with most BI tools out of the box
+* Features parallel processing and columnar data stores which are optimized for complex queries
+* Option to query directly from data files on S3 vi Redshift Spectrum
+
+#### Datalake
+* Query raw data without extensive pre-processing
+* Lessen time from data collection to data value
+* Identify correlations between disparate data sets
+* Can use S3 to dump lost of data into and then use Redshift Spectrum to query that data with other tools
+
+## Neptune
+* Fully managed graph database
+* Supports open graph APIs for both Gremlin and SPARQL
+* Best for inter relationship data
+
+## Elasticache
+* Fully managed implementations of two popular in memory data stores - Redis & Memcached
+* Push button scalability for memory writes and reads
+* In Memory key/value store - not persistent in the traditional sense...
+* Billed by node size and hours of usage
+
+#### Use Cases
+| Use | Benefit |
+| --- | ------- |
+| Web session store | In cases with load balanced web serves, store web session information in Redis so if a server is lost, the session info is not lost and another web server can pick-up |
+| Database caching | Use Memcache in front of AWS RDS to cache popular queries to offload work from RDS and return results faster to users |
+| Leaderboards | Use Redis to provide a live leaderboard for millions of users of your mobile app |
+| Streaming data dashboards | Provide a landing spot for streaming sensor data on the factory flow, providing real-time dashboard displays |
+
+#### Data Store Types
+Memcached:
+* Simple, no-frills, straight forward
+* You need to scale out and in as demand changes
+* You need to run multiple CPU cores and threads
+* You need to cache objects (i.e. like database queries)
+
+Redis:
+* You need encryption
+* You need HIPPA compliance
+* Support for clustering
+* You need complex data types
+* You need high-availability (replication)
+* Pub/Sub capability
+* Geospacial indexing
+* Backup and restore
+ 
+
+## Other Database Options
+
+#### Amazon Athena
+* SQL engine overlaid on S3 based on Presto
+* Query raw data objects as they sit in an S3 bucket
+* Use or convert your data to Parquet format if possible for a big performace jump
+* Similar in concept to Redshift spectrum
+
+Use Athena: Data lives mostly in S3 without the need to perform joins with other data sources
+Redshift Spectrum: Want to join S3 data with existing RedShift tables or create union products
+
+#### Amazon Quantum Ledger Database
+* Based on blockchain concepts
+* Provides an immutable and transparent journal as a service without having to setup and maintain an entire blockchain framework
+* Centralized design (as opposed to decentralized consensus-based design for common blockchain frameworks) allows for higher performance and scalability
+* Append only concept where each record contributes to the integrity of the chain
+
+#### Amazon Managed Blockchain
+* Fully managed blockchain framework supporting open source frameworks of Hyperledger Framework and Ethereum
+* Distributed consensus-based concept consisting of a network, members (other AWS accounts), nodes (instances), and potentially applications.
+* Uses the Amazon QLDB ordering service to maintain complete history of all transactions
+
+#### Amazon Timestream Database
+* Fully managed database service specifically built for storing and analyzing time-series data
+* Alternative to DynamoDB or RedShift and includes some built-in analytics and like interpolation and smoothing
+
+Example usese: Industrial machinery, sensor networks, equipment telemetry
+
+#### Amazon DocumentDB
+* Compatible with MongoDB
+* Fully managed, multi AZ, HA, scalable
+* Integrated with KMS & backups to S3
+
+#### Amazon ElasticSearch
+* Also referred to as ES
+* Mostly a search engine but also a document store 
+* Amazon ElasticSearch Service components are sometimes referred to as an ELK stack
+ 
+ 
+ ## Amazon Database Options
+ Database on EC2:
+ * Unlimited control over database
+ * Preferred DB not available under RDS
+ 
+ Amazon RDS:
+ * Need traditional relational database for OLTP
+ * Your data is well-formed and structured
+ 
+ Amazon DynamoDB:
+ * Name/value pari data or unpredictable data structure
+ * In-memory performance with persistence
+ 
+ Amazon RedShift:
+ * Massive amounts of data
+ * Primarily OLAP workloads
+ 
+ Amazon Neptune:
+ * Relationships between objects a major portion of data value
+ 
+ Amazon Elasticache:
+ * Fast temporary storage for small amounts of data
+ * Highly volatile data
+ 
+ 
+ ## Exam Tips
+ 
+ White Papers:
+ * [AWS Storage Services Overview White Paper](https://d1.awsstatic.com/whitepapers/Storage/AWS%20Storage%20Services%20Whitepaper-v9.pdf)
+ * [SASS Storage Strategies](https://d1.awsstatic.com/whitepapers/Multi_Tenant_SaaS_Storage_Strategies.pdf)
+ * [Performance at Scale with Amazon ElastiCache](https://d0.awsstatic.com/whitepapers/performance-at-scale-with-amazon-elasticache.pdf)
+ 
+ re:Invent Videos:
+ * [S3 Deep Dive](https://www.youtube.com/watch?v=SUWqDOnXeDw&ab_channel=AmazonWebServices)
+ * [RDS Deep Dive](https://www.youtube.com/watch?v=TJxC-B9Q9tQ&ab_channel=AmazonWebServices)
+ * [ElastiCache Deep Dive](https://www.youtube.com/watch?v=_YYBdsuUq2M&ab_channel=AmazonWebServices)
+ * [Hybrid Storage](https://www.youtube.com/watch?v=9wgaV70FeaM&ab_channel=AmazonWebServices)
+ 
+ 
+ ## Pro Tips
+ Storage:
+ * Archiving and backup often a great "pilot" to build AWS business case
+ * Make use of the S3 endpoints with your VPC
+ * Learn how to properly secure your S3 bucket
+ * Encrypt, Encrypt, Encrypt
+ 
+ Database:
+ * Consider Aurora for MySQL or PostgreSQL needs
+ * Consider NoSQL if you don't need relational database features
+ * Databases on EC2 cost less on the surface than RDS, but remember to factor in management
+ * there can be a performance hit when RDS backups run if you have only a singe AZ instance
+ 
+ 
+ ## Challenges
+ 1. 
+ * Mine: B, A, D, C
+ * Correct: D, A, C, B
+ 
+ 2. 
+ * Mine: C
+ * Correct: C
+ 
+ ## Lab - Air Quality Analysis
+ 
+ 
