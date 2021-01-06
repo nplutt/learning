@@ -224,3 +224,159 @@ Does not perform NAT for instances with only a private IP assigned
     - Elastic Network Adapter (25 Gbps)
 
 #### Placement Groups
+| Question | Clustered | Spread | Partition |
+| -------- | --------- | ------ | --------- |
+| What | Instances are placed into a low-latency group within a single AZ | Instances spread across underlying hardware | Instances are grouped into partitions and spread across racks |
+| When | Need low network latency and or high network throughput | Reduce risk of simultaneous failure if underlying hardware fails | Reduce risk of correlated hardware failure for multi-instance workloads |
+| Pros | Get the most out of Enhanced Networking Instances | Can span multiple AZ's | Better for large distributed or replicated workloads than Spread |
+| Cons | Finite capacity: recommend launching all you might need up front | Max of 7 instances running per group per AZ | Not supposed for Dedicated Hosts|
+
+
+## Route 53
+* Register domain names
+* Check the health of your domain resources
+* Route internet traffic for your domain
+
+What you should already know:
+* What is DNS?
+* DNS record types (A, CNAME, MX, TXT, etc.)
+* Route53 concepts (alias, hosted zone, etc.)
+* Why is it called Route 53?
+
+#### Route 53 Routing Policies
+| Policy | Route 53 is thinking... |
+| ------ | ----------------------- |
+| Simple | Sinple. Here's the detination for that name. |
+| Failover | Normally, I'd route you to <Primary>, but it appears down based on my health checks so I'll failover to <Backup> |
+| Geolocation | Looks like you're in Europe, so I'm going to route you to a resources closer to you in that region. |
+| Geoproximity | You're closer to the us-east-1 region than us-west-2 so I'll route you to us-east-2 |
+| Latency | Let me see which resources has lower latency for you, the I'll direct you that way. |
+| Multivalue Answer | I will return several IP addresses, as a sort of basic load balancer |
+| Weighted | You can setup multiple resources and I'll route according to the percentage of weight you assigned each |
+
+#### Weighted Routing
+ Weighted traffic formula: Weight for a specified record / Sum of all weights for all records = percentage of traffic
+
+
+## Cloudfront
+* Distributed content delivery service for simpel statuc asset caching up to 4k live and on-demand video streaming
+* You should already know how to create a CloudFront distribution and understand edge location concept
+* Integrated with Amazon Certificate Manager and supports SNI (Server Name Indication)
+
+
+## Elastic Load Balancers
+* Distributes inbound connections to one or many backend endpoints
+* Three different options:
+    - Application Load Balancer (L7)
+    - Network Load Balancer (L4)
+    - Classic Load Balancer (L4 or L7)
+* Can be used for public or private workloads
+* Consume IP addresses within a VPC subnet
+
+#### Elastic Load Balancer - Similarities
+All load balancers support the following:
+* Zonal Failover
+* Health Checks
+* Cross-Zone Load Balancing
+* CloudWatch Metrics
+* SSL Offloading
+* Resource-based IAM Permissions
+
+ALB & NLB are VPC only
+
+Classic LB is EC2-Classic or VPC
+
+#### Elastic Load Balancer
+| What | Application LB | Network LB | Classic LB |
+| ---- | -------------- | ---------- | ---------- |
+| Protocols | HTTPS, HTTP | TCP, UDP, TLS | TCP, SSL, HTTP, HTTPS |
+| Path or Host Based Routing | Yes | No | No |
+| WebSockets | Yes | Yes | No |
+| Server Name Indication (SNI) | Yes | Yes | No |
+| Sticky Sessions | Yes | Yes | Yes |
+| Static IP, Elastic IP | Only through AWS Global Accelerator | Yes | No |
+| User Authentication | Yes | No | No |
+
+#### Elastic Load Balancers - Routing
+NLB:
+* Port number
+* RCP connections to backend are persisted for the duration of the connection 
+
+ALB: 
+* Host based routing 
+* Path based routing 
+* HTTP header based routing 
+* HTTP method based routing 
+* Query string parameter based routing
+* Source IP address CIDR based routing
+
+
+## Exam Tips
+VPCs in General:
+* Know the pros and cons of each On-prem to AWS connection mode
+* Know the functions of the different VPC components (Customer Gateway, Virtual Private Gateway)
+* Know that Direct Connect is not inherently redundant, so know how to architect a network that is (VPN, secondary direct connect)
+* Multicast and Broadcast aren't supported in VPCs
+* Know what is meant by "stateless", "stateful", "connectionless" and "connection-based" in terms of IP protocols
+* Know what ephemeral ports are and why they might need to be in NACLs or SGs
+
+Routing:
+* Understand BGP and how to use weighting to shift network traffic
+* Know how routes in a route table are prioritized (most specific first)
+* What other routing protocols does AWS support (none... only BGP)
+
+VPC Peering:
+* CIDR ranges cannot overlap
+* After VPC owner accepts a peering request, routes must be added to respective route tables
+* Transitive peering is not supported, but mesh or hub-and-spoke architectures are ... with proper NACLs and routes
+* A Transit VPC is supported
+
+Internet Gateways:
+* Difference between NAT instance and NAT Gateway
+* Internet Gateway is horizontally scaled, redundant, with no bandwidth constraints
+* NATs do have bandwidth constraints but...
+* VPCs can have multiple NATs across AZs and subnets for scale - so long as routes are defined properly
+* Use Egress-Only Gateway for IPv6
+
+Route 53:
+* Understand different types of routing policies and use cases
+* Know the weighted routing formula
+* Route 53 is a global service
+
+CloudFront:
+* Understand what must happen to use a custom domain with CloudFront
+* Understand what SNI enables and the necessary alternatives
+
+Elastic Load Balancer:
+* Know the three different types of Load Balancers and which OSI Layer they work on
+* Understand which major features each deliver (protocol, SNI, Sticky Sessions)
+* Know what Sticky Sessions are and when they come into play
+
+White Papers:
+* [Amazon Virtual Private Cloud Connectivity Options](https://d0.awsstatic.com/whitepapers/aws-amazon-vpc-connectivity-options.pdf)
+* [Integrating AWS with Mutiprotocol Label Switching](https://d1.awsstatic.com/whitepapers/Networking/integrating-aws-with-multiprotocol-label-switching.pdf)
+* [Security in Amazon Virtual Private Cloud](https://docs.aws.amazon.com/vpc/latest/userguide/security.html)
+* [Re:Invent Networking Many VPCs: Transit and Shared Architectures](https://www.youtube.com/watch?v=KGKrVO9xlqI&ab_channel=AmazonWebServices)
+* [Re:Invent Another Day, Another Billion Flows](https://www.youtube.com/watch?v=8gc2DgBqo9U&ab_channel=AmazonWebServices)
+* [Re:Invent Deep Dive into the New Network Load Balancer](https://www.youtube.com/watch?v=z0FBGIT1Ub4&ab_channel=AmazonWebServices)
+
+
+## Pro Tips:
+* Direct Connect may be a more complex and costlier option to setup, but it could save big on bandwidth costs
+* Explicitly deny as much traffic as you can with NACLs and SC-Principle of Least Privilege
+* Think through your VPC layout (See Re:Invent video)
+* You can use Route 53 for tour domain even if AWS isn't your registrar
+* ELBs provide a useful layer of abstraction (as does Route 53 too!)
+
+
+## Challenges
+* Question 1:
+    - My Answer: C, E, F
+    - Correct Answer: C, F, H
+    
+    It's not E because there is not bandwidth limit for Internet Gateways
+    
+* Question 2:
+    - My Answer: E
+    - Correct Answer: E
+
