@@ -193,6 +193,124 @@ Simple AD:
 
 
 ## Distributed Denial of Service Attacks
+* Amplification/Reflection Attacks
+* Application Attacks (Layer 7)
+
+#### Mitigating DDoS
+| Best Practice | AWS Service |
+| ------------- | ----------- |
+| Minimize attack surface | NACLs, SGs, VPC design |
+| Scale to absorb the attack | Auto-Scaling groups, AWS Cloudfront, Static web content via S3 |
+| Safeguard exposed resources | Route53, AWS WAF, AWS Shield |
+| Learn normal behavior | AWS GuardDuty, Cloudwatch |
+| Have a plan | All you! |
 
 
+## IDS and IPS
 
+#### Intrusion Prevention and Detection
+* Intrusion Detection System: watches the network and systems for suspicious activity that might indicate someone trying to compromise a system
+* Intrusion Prevention System: tries to prevent exploits by sitting behind firewalls and scanning and analyzing suspicious content for threats.
+* Normally compromised of a Collection / Monitoring system and monitoring agents on each system
+* Logs collected or analyzed in CloudWatch, S3 or third-party tools (Splunk, SumoLogic, etc.) sometimes called a Security Information and Event Management (SIEM) system
+
+ #### CloudWatch vs CloudTrail
+ | CloudWatch | CloudTrail |
+ | ---------- | ---------- |
+ | Log events across AWS services; Think operations | Log API activity across AWS services; Think activities |
+ | Higher-level comprehensive monitoring and venting | More low-level granular |
+ | Log from multiple accounts | Log from multiple accounts |
+ | Logs stored indefinitely | Logs stored to S3 or CloudWatch indefinitely |
+ | Alarms history for 14 days | No native alarming; Can use CloudWatch alarms |
+ 
+ 
+ ## Service Catalog
+ 
+ #### AWS Service Catalog
+ * Framework allowing administrators to create pre-defined products and landscapes for their users
+ * Granular control over which users have access to which offerings
+ * Make user of adopted IAm roles so users don't need underlying service access
+ * Allows end users to be self-sufficient while upholding enterprise standards for deployments
+ * Based on CloudFormation templates
+ * Administrators can version and remove products. Existing running product versions will not be shutdown.
+ 
+ #### AWS Service Catalog Constraints 
+ | Type | What | Why |
+ | ---- | ---- | --- |
+ | Launch Constraint | IAM role that Service Catalog assumes when an end-user launches a product. | Without a launch constraint, the end-user mist have all permissions needed withing their own IAM credentials. |
+ | Notification Constraint | Specifies the Amazon SNS topic to receive notifications about stack events. | Can get notifications when products are launched or have problems. |
+ | Template Constraint | One or more rules that narrow allowable values an end-user can select. | Adjust product attributes based on choices a user makes. (Ex: Only allow certain instance types for dev environment) |
+
+#### Multi-Account Scenarios
+* Can create constraints to share across multiple accounts
+
+
+## Exam Tips
+Multi-Account Management: 
+* Know the different models and best practices for cross-account management of security.
+* Know how roles and trusts are used to create cross-account relationships and authorizations.
+
+Network Controls and Security Groups:
+* Know the differences and capabilities of NACLs and SGs
+* NACLs are stateless
+* Get some hands-on with NACLs and SGs to reinforce your knowledge
+* Remember the ephemerals
+
+AWS Directory Services:
+* Understand the types of Directory Services offer by AWS - especially AD Connector and Simple AD
+* Understand use-cases for each type of Directory Service
+* Be familiar with how on-prem Active Directory implementation might connect to AWS and what functions that might enable
+
+Credential and Access Management:
+* Know IAM and its components
+* Know how to read and write IAM policies in JSON
+* Understand Identity Brokers, Federation, and SSO
+* Know options and steps for temporary authorization
+
+Encryption:
+* Know differences between AWS KMS and CloudHSM and use cases
+* Test will likely be restricted to the "classic" CloudHSM
+* Understand AWS Certificate Manager and how it integrates with other AWS services
+
+DDoS Attacks:
+* Understand what they are and some best practices to limit your exposure
+* Know some options to mitigate them using AWS services
+
+IDS/IPS:
+* Understand the difference between IDS and IPS
+* Know what AWS services can help with each
+* Understand the differences between CloudWatch and CloudTrail
+
+Service Catalog:
+* Know that it allows users to deploy assets through inheriting rights
+* Understand how Service Catalog can work in a multi-account scenario
+
+White Papers: 
+* [AWS Best Security Practices](https://d1.awsstatic.com/whitepapers/aws-security-best-practices.pdf)
+* [AWS Multi-Account Security Strategy](https://d1.awsstatic.com/aws-answers/AWS_Multi_Account_Security_Strategy.pdf)
+* [AWS Best Practices for DDoS Resiliency](https://d1.awsstatic.com/whitepapers/Security/DDoS_White_Paper.pdf)
+* [AWS Well Architected Framework - Security Pillar](https://d1.awsstatic.com/whitepapers/architecture/AWS-Security-Pillar.pdf?ref=wellarchitected)
+* [Re:Invent Best Practices for Managing Security Operations](https://www.youtube.com/watch?v=gjrcoK8T3To&ab_channel=AmazonWebServices)
+* [Re:Invent Become an IAM Policy Master](https://www.youtube.com/watch?v=YQsK4MtsELU&ab_channel=AmazonWebServices)
+* [Re:Invent Security Anti-Patterns](https://www.youtube.com/watch?v=tzJmE_Jlas0&ab_channel=AmazonWebServices)
+* [Re:Invent Architecting Security and Governance Across a Multi-Account](https://www.youtube.com/watch?v=71fD8Oenwxc&ab_channel=AmazonWebServices)
+* [Re:Invent Managing Multi-Account AWS Environments Using AWS Organizations](https://www.youtube.com/watch?v=fxo67UeeN1A&ab_channel=AmazonWebServices)
+
+
+## Pro Tips
+* Know that security will be front-of-mind for every client evaluating the cloud ... but rarely are there sound processes in place
+* Acknowledge concerns and be ready with a process (Cloud Adoption Framework is a good start)
+* Leverage assessments and checklists as illustrators of care and best practice
+* Migrating to the cloud is often more secure than on-prem due to increased transparency and visibilty
+* Speak in terms of risk as a continuum rathe than an absolute
+* Consider AWS Certified Security - Specialty or other security minded certification like CISSP
+
+
+## Challenges
+* Question 1:
+    - My Answer: C, F, H
+    - Correct Answer: A, C, F
+    
+* Question 2:
+    - My Answer: B, F
+    - Correct Answer: B, F
