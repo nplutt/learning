@@ -236,5 +236,63 @@ Amazon Translate
 
 ## Exam Tips
 
+Types of Deployments:
+* Understand the types of deployments and when each might be preferred in a given situation
+* Know the various ways AWS can support Blue/Green deployments and when Blue/Green is not recommended
+
+CI/CD:
+* Understand conceptually Continuous Integration, Continuous Delivery, and Continuous Deployment and their considerations
+* Know what AWS tools can be used to facilitate these methods of deployment
+
+Elastic Beanstalk:
+* Know the components of Elastic Beanstalk and platforms supported
+* Understand the deployment options with Elastic Beanstalk and the tradeoffs for each
+
+CloudFormation:
+* Understand how CloudFormation Delivers Infrastructure as Code and the benefits of that
+* Strongly recommend hands-on work with CloudFormation via one of our more in-depth courses if you haven't worked with it before
+
+Elastic Container Service:
+* Know the difference between ECS and EKS - as well as the uniqueness of each
+* Understand the differences between EC2 Launch Types and Fargate Launch Types
+
+API Gateway:
+* Understand what you would deploy on an API Gateway
+* Remember that API Gateway is designed to serve up REST APIs
+
+Management Tools:
+* Know when and what you can expect when using AWS config. Understand the purpose of a Config Rule.
+* Know the different flavors of AWS OpsWorks and, conceptually, what Chef and Puppet offer
+* Understand the difference between AWS OpsWorks Stacks and AWS OpsWorks for Chef Automate
+* Remember that OpsWorks is a global service, but you can only manage resources in the region you created the OpsWorks stack.
+
+System Manager:
+* Know the various services under the System Manager heading and how they help simplify management of large landscapes
+* Can manage both AWS-based and on-prem systems so long as they are supported OSs
+* Understand Patch Manager pre-defined baselines and that they act as a pre-approval gatekeeper
+* Understand the various SSM document types and their purposes
+
+White Papers
+* [Infrastructure as Code](https://d1.awsstatic.com/whitepapers/DevOps/infrastructure-as-code.pdf)
+* [Practicing Continuous Integration and Continuous Delivery on AWS](https://d1.awsstatic.com/whitepapers/DevOps/practicing-continuous-integration-continuous-delivery-on-AWS.pdf)
+* [Overview of Deployment Options on AWS](https://d1.awsstatic.com/whitepapers/overview-of-deployment-options-on-aws.pdf)
+* [ReInvent: Deep Dive on AWS CloudFormation](https://www.youtube.com/watch?v=01hy48R9Kr8&ab_channel=AmazonWebServices)
+* [ReInvent: Moving to Containers: Building with Docker and Amazon ECS](https://www.youtube.com/watch?v=Qik9LBktjgs&ab_channel=AmazonWebServices)
+* [ReInvent: Continuous Integration Best Practices for Software Development Teams](https://www.youtube.com/watch?v=GEPJ7Lo346A&ab_channel=AmazonWebServices)
 
 
+## Pro Tips
+* The cloud will open a whole new world of possibilities to landscape management and project deployment
+* Blue/Green is not just for nimble web apps in the cloud
+* It will be a hard transition to move to Infrastructure as Code. Training is key.
+* API Gateway + Lambda create loads of opportunity for agility and efficiency in the way of serverless platforms.
+
+
+ ## Challenges
+ * Question 1:
+    - My Answer: D
+    - Correct Answer: D
+    
+* Question 2:
+    - My Answer: C, G
+    - Correct Answer: C, G 
