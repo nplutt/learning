@@ -380,7 +380,60 @@ AWS Transit Gateway connects VPCs and on-premises networks through a central hub
 
 As you expand globally, inter-Region peering connects AWS Transit Gateways together using the AWS global network. Your data is automatically encrypted, and never travels over the public internet. And, because of its central position, AWS Transit Gateway Network Manager has a unique view over your entire network, even connecting to Software-Defined Wide Area Network (SD-WAN) devices.
 
-# Reserved Instances
+# EC2
+
+#### Reserved Instances
+Reserved Instances provide you with significant savings on your Amazon EC2 costs compared to On-Demand Instance pricing. Reserved Instances are not physical instances, but rather a billing discount applied to the use of On-Demand Instances in your account. These On-Demand Instances must match certain attributes, such as instance type and Region, in order to benefit from the billing discount.
+
+Savings Plans also offer significant savings on your Amazon EC2 costs compared to On-Demand Instance pricing. With Savings Plans, you make a commitment to a consistent usage amount, measured in USD per hour. This provides you with the flexibility to use the instance configurations that best meet your needs and continue to save money, instead of making a commitment to a specific instance configuration. For more information, see the AWS Savings Plans User Guide.
+
+**Instance Attributes**
+* Instance type
+* Region
+* Tenancy
+* Platform
+
+**Term Commitment**
+* One year 
+* Three year
+
+**Payment Options**
+* All Upfront: full payment is made for the entire term
+* Partial Upfront: A portion of the term is paid upfront and the remaining hours are billed at a discounted hourly rate
+* No Upfront: Billed an hourly rate for every hour within the term
+
+**Offering Class**
+* Standard: provide the most significant discount but can only be modified. Standard Reserved Instances can't be exchanged.
+* Convertible: Provide a lower discount rate than standard, ut can be exchanged for another convertible instance with different attributes.
+
+Note: You cannot purchase schedule reserved instances!
+
+#### Dedicated Hosts
+An Amazon EC2 Dedicated Host is a physical server with EC2 instance capacity fully dedicated to your use.
+
+#### Dedicated Instances
+Dedicated Instances are Amazon EC2 instances that run in a virtual private cloud (VPC) on hardware that's dedicated to a single customer. Dedicated Instances that belong to different AWS accounts are physically isolated at a hardware level, even if those accounts are linked to a single payer account. 
+
+#### On Demand Capacity Reservations
+On-Demand Capacity Reservations enable you to reserve capacity for your Amazon EC2 instances in a specific Availability Zone for any duration. This gives you the ability to create and manage Capacity Reservations independently from the billing discounts offered by Savings Plans or regional Reserved Instances. By creating Capacity Reservations, you ensure that you always have access to EC2 capacity when you need it, for as long as you need it. 
+
+When you create a Capacity Reservation, you specify:
+* The Availability Zone in which to reserve the capacity
+* The number of instances for which to reserve capacity
+* The instance attributes, including the instance type, tenancy, and platform/OS
+
+Capacity Reservations can only be used by instances that match their attributes. By default, they are automatically used by running instances that match the attributes. If you don't have any running instances that match the attributes of the Capacity Reservation, it remains unused until you launch an instance with matching attributes.
+
+In addition, you can use Savings Plans and regional Reserved Instances with your Capacity Reservations to benefit from billing discounts. AWS automatically applies your discount when the attributes of a Capacity Reservation match the attributes of a Savings Plan or regional Reserved Instance. For more information, see Billing discounts.
+
+# Billing and Cost Management
+AWS Billing and Cost Management is the service that you use to pay your AWS bill, monitor your usage, and analyze and control your costs.
+
+AWS automatically charges the credit card that you provided when you signed up for a new account with AWS. Charges appear on your monthly credit card bill. You can view or update your credit card information, including designating a different credit card for AWS to charge, on the Payment Methods page in the Billing and Cost Management console. AWS Billing and Cost Management provides useful tools to help you gather information related to your cost and usage, analyze your cost drivers and usage trends, and take action to budget your spending.
+
+#### Features
+* **Analyzing Costs with Cost Explorer:** Cost explorer tool to view AWS cost data as a graph. Allows graphs to be filtered by service, AZ, API, tag, instance type, purchase option, usage type, and more.
+* **AWS Budgets:** You can use AWS Budgets to track your AWS usage and costs. Budgets use the cost visualization provided by Cost Explorer to show you the status of your budgets. This provides forecasts of your estimated costs and tracks your AWS usage, including your free tier usage. You can also use budgets to create Amazon Simple Notification Service (Amazon SNS) notifications that tell you when you go over your budgeted amounts, or when your estimated costs exceed your budgets.
 
 
 # Random Architectures
