@@ -7,7 +7,7 @@
 * VM Import Export [docs](https://aws.amazon.com/ec2/vm-import/)
 * AWS Storage Gateway [docs](https://aws.amazon.com/storagegateway/faqs/)
 * Amazon FSx for Windows File Server [docs](https://aws.amazon.com/fsx/windows/faqs/)
-* AWS Cloud Adoption Framework [docs](https://aws.amazon.com/professional-services/CAF/)
+* AWS Cloud Adoption Framework [docs](https://docs.aws.amazon.com/whitepapers/latest/aws-migration-whitepaper/the-aws-cloud-adoption-framework-aws-caf.html)
 * AWS Application Discovery Service [docs](https://aws.amazon.com/application-discovery/faqs/?nc=sn&loc=6)
 * [Migration Strategies](https://aws.amazon.com/blogs/enterprise-strategy/6-strategies-for-migrating-applications-to-the-cloud/)
 * [SharePoint Hybrid Architecture](https://d1.awsstatic.com/VMwareCloudonAWS/SharePoint-Hybrid_Reference-Architecture.pdf?did=wp_card&trk=wp_card)
