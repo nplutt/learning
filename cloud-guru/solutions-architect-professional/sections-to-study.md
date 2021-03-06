@@ -68,7 +68,7 @@
 * KMS [docs](https://docs.aws.amazon.com/kms/latest/developerguide/overview.html)
     * [AWS Systems Manager Parameter Store](https://docs.aws.amazon.com/kms/latest/developerguide/services-parameter-store.html)
 * AWS IoT Events [docs](https://docs.aws.amazon.com/iotevents/latest/developerguide/what-is-iotevents.html)
-* AWS IoT Analytics[docs](https://docs.aws.amazon.com/iotevents/latest/developerguide/what-is-iotevents.html)
+* AWS IoT Analytics[docs](https://docs.aws.amazon.com/iotanalytics/latest/userguide/welcome.html)
 * [IoT Connected Home - Telemetry](https://d1.awsstatic.com/architecture-diagrams/ArchitectureDiagrams/connected_home_telemetry_ra.pdf?did=wp_card&trk=wp_card)
 * [Cross-Account ECR Images in AWS CodeBuild](https://aws.amazon.com/blogs/devops/how-to-use-cross-account-ecr-images-in-aws-codebuild-for-your-build-environment/)
 * IAM [docs](https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html)

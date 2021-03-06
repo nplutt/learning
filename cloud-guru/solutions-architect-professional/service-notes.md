@@ -435,6 +435,119 @@ AWS automatically charges the credit card that you provided when you signed up f
 * **Analyzing Costs with Cost Explorer:** Cost explorer tool to view AWS cost data as a graph. Allows graphs to be filtered by service, AZ, API, tag, instance type, purchase option, usage type, and more.
 * **AWS Budgets:** You can use AWS Budgets to track your AWS usage and costs. Budgets use the cost visualization provided by Cost Explorer to show you the status of your budgets. This provides forecasts of your estimated costs and tracks your AWS usage, including your free tier usage. You can also use budgets to create Amazon Simple Notification Service (Amazon SNS) notifications that tell you when you go over your budgeted amounts, or when your estimated costs exceed your budgets.
 
+# ECS
+
+## Injecting Secrets
+* The `secrets` parameter is used for sensitive container environment variables
+* the `secretsOptiosn` parameter is used for sensitive information in the log configuration
+
+# AWS IoT Core
+AWS IoT provides the cloud services that connect your IoT devices to other devices and AWS cloud services. AWS IoT provides device software that can help you integrate your IoT devices into AWS IoT-based solutions. If your devices can connect to AWS IoT, AWS IoT can connect them to the cloud services that AWS provides.
+
+# AWS IoT Greengrass
+AWS IoT Greengrass is software that extends cloud capabilities to local devices. This enables devices to collect and analyze data closer to the source of information, react autonomously to local events, and communicate securely with each other on local networks. Local devices can also communicate securely with AWS IoT Core and export IoT data to the AWS Cloud. AWS IoT Greengrass developers can use AWS Lambda functions and prebuilt connectors to create serverless applications that are deployed to devices for local execution.
+
+AWS IoT Greengrass makes it possible for customers to build IoT devices and application logic. Specifically, AWS IoT Greengrass provides cloud-based management of application logic that runs on devices. Locally deployed Lambda functions and connectors are triggered by local events, messages from the cloud, or other sources.
+
+In AWS IoT Greengrass, devices securely communicate on a local network and exchange messages with each other without having to connect to the cloud. AWS IoT Greengrass provides a local pub/sub message manager that can intelligently buffer messages if connectivity is lost so that inbound and outbound messages to the cloud are preserved.
+
+# AWS IoT Events
+AWS IoT Events enables you to monitor your equipment or device fleets for failures or changes in operation, and to trigger actions when such events occur. AWS IoT Events continuously watches IoT sensor data from devices, processes, applications, and other AWS services to identify significant events so you can take action.
+
+You can use AWS IoT Events to build complex event monitoring applications in the AWS Cloud that you can access through the AWS IoT Events console or APIs.
+
+#### Benefits & Features
+* **Accept Inputs from Multiple Sources:** AWS IoT Events accepts inputs from many IoT telemetry data sources. These include sensor devices, management applications, and other AWS IoT services, such as AWS IoT Core and AWS IoT Analytics. You can push any telemetry data input to AWS IoT Events by using a standard API interface (BatchPutMessage API).
+* **Use Simple Logical Expressions to Recognize Complex Patterns of Events:** AWS IoT Events can recognize patterns of events that involve multiple inputs from a single IoT device or application, or from diverse equipment and many independent sensors. This is especially useful because each sensor and application provides important information. But only by combining diverse sensor and application data can you get a complete picture of the performance and quality of operations. You can configure AWS IoT Events detectors to recognize these events using simple logical expressions instead of complex code.
+* **Trigger Actions Based on Events:** AWS IoT Events enables you to directly trigger actions in Amazon Simple Notification Service (Amazon SNS), AWS IoT Core, Lambda, Amazon SQS and Amazon Kinesis Firehose. You can also trigger an AWS Lambda function using the AWS IoT rules engine which makes it possible to take actions using other services, such as Amazon Connect, or your own enterprise resource planning (ERP) applications. AWS IoT Events includes a prebuilt library of actions you can take, and also enables you to define your own.
+* **Automatically Scale to Meet the Demands of Your Fleet:** AWS IoT Events scales automatically when you are connecting homogeneous devices. You can define a detector once for a specific type of device, and the service will automatically scale and manage all instances of that device that connect to AWS IoT Events
+
+#### Use Cases
+* **Monitor and Maintain Remote Devices:** Monitor multiple sensors on each machine and diagnose issues using error codes sent over time. Instead of replacing the machine you can tell a technician exactly what's wrong and get it fixed. With millions of machines this can add up to millions of dollars in savings.
+* **Managing Industrial Robots:** Robots with dozens of sensors and hundreds of operating models can be hard to diagnose. With IoT events you can build an expert system to process data and create alerts that warn staff before a machine fails.
+* **Track Building Automated Systems:** Since sensors are not standardized and sometimes you can have hundreds all creating different data, using IoT events allows you to setup alerts to notify you of issues well in advance of failuers.
+
+#### Supported Actions
+** Built in Actions**
+* setTimer 
+* resetTimer
+* clearTimer
+* setVariable
+
+** Built in AWS Service Integrations**
+* iotTopicPublish: publish messages to an MQTT topic
+* iotEvents: send data to IoT events as an input value
+* iotSiteWise: send data to an asset property in iOT SiteWise
+* dynamoDB: Send data to a table
+* firehose: send data to a Kinesis firehose
+* lambda: invoke an Lambda function
+* sns: send data as a push notification
+* sqs: send data to an SQS queue
+
+# IoT Analytics
+Automates the steps required to analyze data from IoT devices. IoT Analytics filters, transforms, and enriches IoT data before storing it in a time-series data store for analytics.
+Once it's in the data store it can be analyzed via SQL or machine learning models.
+
+IoT data is often unstructured, inconsistent, and can be corrupted. IoT Analytics allows you to process and cleanup this data before storing it. 
+
+#### Features
+* **Collect:** Can receive messages fom AWS IoT Core, HTTP, or MQTT topics
+* **Process:** Use Lambda to detect missing data and fill in gaps, transform metrics so they're consistent, enrich data with external data sources.
+* **Store:** Data is stored in an optimized time-series data store and raw data is also stored so that it can be processed at a later date.
+* **Analyze:** Run ad-hoc SQL queries, preform time series analysis, run hosted jupiter notebooks and machine learning models, preform logistical regression to predict future states.
+* **Build and Visualize:** Use Quicksight to create dashboards and run ad-hoc queries using jupiter notebooks.
+
+#### Components and Concepts
+* **Channel:** Collects data from an MQTT topic and archives the raw unprocessed messages before publishing them to a data pipeline. Unprocessed messages are stored in S3.
+* **Pipeline:** Consumes messages from a channel and allows you to process them before storing them.
+* **Data Store:** Pipelines store their processed data in a data store. It is not a database but is a scalable queryable repository for your messages. You can have multiple data stores for messages from different devices.
+* **Data Set:** Retrieve data from the data store using a data set. Once you have a dataset you can explore the data using a jupiter notebook or Quicksight.
+* **SQL Data Set:** Similar to a materialized view in a SQL database.
+* **Container Data Set:** Automatically run your analysis results and generate results. This can be run on a scheduled basis.
+
+#### Use Cases
+* Predictive maintenance 
+* Proactive replenishing of supplies
+* Process efficiency scoring
+* Smart agriculture
+
+# DynamoDB
+
+#### Design
+Except in cases where high-volume time series data is involved or datasets that very different access patterns. A single table with inverted indexes can usually enable simple queries to create and retrieve complex hierarchical data structures required by your application.
+
+#### Partition Key
+The primary ke that identifies each item in the table. This can be a simple (partition key only) or composite (a partition key combined with a sort key)
+
+#### Sort Keys
+In an Amazon DynamoDB table, the primary key that uniquely identifies each item in the table can be composed not only of a partition key, but also of a sort key.
+
+Well-designed sort keys have two key benefits:
+* They gather related information together in one place where it can be queried efficiently. Careful design of the sort key lets you retrieve commonly needed groups of related items using range queries with operators such as begins_with, between, >, <, and so on.
+* Composite sort keys let you define hierarchical (one-to-many) relationships in your data that you can query at any level of the hierarchy. For example, in a table listing geographical locations, you might structure the sort key as follows.
+```
+[country]#[region]#[state]#[county]#[city]#[neighborhood]
+```
+This would let you make efficient range queries for a list of locations at any one of these levels of aggregation, from country, to a neighborhood, and everything in between.
+
+#### Secondary Indexes
+Secondary indexes are often essential to support the query patterns that your application requires. At the same time, overusing secondary indexes or using them inefficiently can add cost and reduce performance unnecessarily.
+
+Amazon DynamoDB supports two types of secondary indexes:
+* Global secondary index—An index with a partition key and a sort key that can be different from those on the base table. A global secondary index is considered "global" because queries on the index can span all of the data in the base table, across all partitions. A global secondary index has no size limitations and has its own provisioned throughput settings for read and write activity that are separate from those of the table.
+* Local secondary index—An index that has the same partition key as the base table, but a different sort key. A local secondary index is "local" in the sense that every partition of a local secondary index is scoped to a base table partition that has the same partition key value. As a result, the total size of indexed items for any one partition key value can't exceed 10 GB. Also, a local secondary index shares provisioned throughput settings for read and write activity with the table it is indexing.
+
+Each table in DynamoDB can have up to 20 global secondary indexes (default quota) and 5 local secondary indexes.
+
+In general, you should use global secondary indexes rather than local secondary indexes. The exception is when you need strong consistency in your query results, which a local secondary index can provide but a global secondary index cannot (global secondary index queries only support eventual consistency).
+
+#### Expiring Items Using TTL
+Amazon DynamoDB Time to Live (TTL) allows you to define a per-item timestamp to determine when an item is no longer needed. Shortly after the date and time of the specified timestamp, DynamoDB deletes the item from your table without consuming any write throughput. TTL is provided at no extra cost as a means to reduce stored data volumes by retaining only the items that remain current for your workload’s needs.
+
+TTL is useful if you store items that lose relevance after a specific time. The following are example TTL use cases:
+* Remove user or sensor data after one year of inactivity in an application.
+* Archive expired items to an Amazon S3 data lake via DynamoDB Streams and AWS Lambda.
+* Retain sensitive data for a certain amount of time according to contractual or regulatory obligations.
 
 # Random Architectures
 
