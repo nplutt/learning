@@ -248,8 +248,162 @@ Artifacts: Artifacts refers to the collection of data, such as application sourc
 Source revisions: When you make a source code change, a new version is created. A source revision is the version of a source change that triggers a pipeline execution. An execution processes that source revision only
 
 # CodeBuild
+CodeBuild compiles your source code, runs unit tests, and produces artifacts that are ready to deploy. CodeBuild eliminates the need to provision, manage, and scale your own build servers.
 
+#### Supported Source Code Sources
+* CodeCommit
+* Amazon S3
+* Github
+* Bitbucket
 
+#### Build Specification Reference
+The buildspec has the following syntax:
+```yaml
+version: 0.2
+
+run-as: Linux-user-name
+
+env:
+  shell: shell-tag
+  variables:
+    key: "value"
+    key: "value"
+  parameter-store:
+    key: "value"
+    key: "value"
+  exported-variables:
+    - variable
+    - variable
+  secrets-manager:
+    key: secret-id:json-key:version-stage:version-id
+  git-credential-helper: no | yes
+
+proxy:
+  upload-artifacts: no | yes
+  logs: no | yes
+
+batch:
+  fast-fail: false | true
+  # build-list:
+  # build-matrix:
+  # build-graph:
+        
+phases:
+  install:
+    run-as: Linux-user-name
+    on-failure: ABORT | CONTINUE
+    runtime-versions:
+      runtime: version
+      runtime: version
+    commands:
+      - command
+      - command
+    finally:
+      - command
+      - command
+  pre_build:
+    run-as: Linux-user-name
+    on-failure: ABORT | CONTINUE
+    commands:
+      - command
+      - command
+    finally:
+      - command
+      - command
+  build:
+    run-as: Linux-user-name
+    on-failure: ABORT | CONTINUE
+    commands:
+      - command
+      - command
+    finally:
+      - command
+      - command
+  post_build:
+    run-as: Linux-user-name
+    on-failure: ABORT | CONTINUE
+    commands:
+      - command
+      - command
+    finally:
+      - command
+      - command
+reports:
+  report-group-name-or-arn:
+    files:
+      - location
+      - location
+    base-directory: location
+    discard-paths: no | yes
+    file-format: report-format
+artifacts:
+  files:
+    - location
+    - location
+  name: artifact-name
+  discard-paths: no | yes
+  base-directory: location
+  exclude-paths: excluded paths
+  enable-symlinks: no | yes
+  s3-prefix: prefix
+  secondary-artifacts:
+    artifactIdentifier:
+      files:
+        - location
+        - location
+      name: secondary-artifact-name
+      discard-paths: no | yes
+      base-directory: location
+    artifactIdentifier:
+      files:
+        - location
+        - location
+      discard-paths: no | yes
+      base-directory: location
+cache:
+  paths:
+    - path
+    - path
+```
+
+The buildspec contains the following:
+* version: the buildspec version to use
+* run-as: available to linux users only. Specifies the user that runs commands in the buildspec file
+* env: operational sequence. Represents information for one or more custom environment varialbes
+    - env/shell: specifies the supported shell for Linux or Windows
+        * Linux shell tags are `bash` or `/bin/sh`
+        * Windows shell tags are `powershell.exe` or `cmd.exe`
+    - env/variables: Required if env is specified, and you want to define custom environment variables in plain text. Contains a mapping of key/value scalars, where each mapping represents a single custom environment variable in plain text
+    - env/parameter-store: Required if env is specified, and you want to retrieve custom environment variables stored in Amazon EC2 Systems Manager Parameter Store. 
+    - env/secrets-manager: Required if you want to retrieve custom environment variables stored in AWS Secrets Manager. Specify a Secrets Manager reference-key.
+    - env/exported-variables: Optional mapping. Used to list environment variables you want to export. 
+    - env/git-credential-helper: Optional mapping. Used to indicate if CodeBuild uses its Git credential helper to provide Git credentials. yes if it is used. Otherwise, no or not specified. For more information, see gitcredentials on the Git website.
+* proxy: Optional sequence. Used to represent settings if you run your build in an explicit proxy server.
+* phases: Required sequence. Represents the commands CodeBuild runs during each phase of the build.
+    - phases/*/run-as: Optional sequence. Use in a build phase to specify a Linux user that runs its commands.
+    - phases/*/on-failure: Optional sequence. Specifies the action to take if a failure occurs during the phase. This can be one of the following values:
+        * ABORT - abort the build
+        * CONTINUE - continue to the next build phase
+    - phases/install: Optional sequence. Represents the commands, if any, that CodeBuild runs during installation.
+    - phases/pre_build: Optional sequence. Represents the commands, if any, that CodeBuild runs before the build. For example, you might use this phase to sign in to Amazon ECR, or you might install npm dependencies.
+    - phase/build: Optional sequence. Represents the commands, if any, that CodeBuild runs during the build. For example, you might use this phase to run Mocha, RSpec, or sbt.
+    - phases/post_build: Optional sequence. Represents the commands, if any, that CodeBuild runs after the build. For example, you might use Maven to package the build artifacts into a JAR or WAR file, or you might push a Docker image into Amazon ECR. Then you might send a build notification through Amazon SNS.
+* reports: Optional sequence. Specifies the report group that the reports are sent to. A project can have a maximum of five report groups. Specify the ARN of an existing report group, or the name of a new report group.
+    - reports/<report-group>/files: Required sequence. Represents the locations that contain the raw data of test results generated by the report. 
+    - reports/<report-group>/file-format: Optional mapping. Represents the report file format. If not specified, JUNITXML is used.
+    - reports/<report-group>/base-directory: Optional mapping. Represents one or more top-level directories, relative to the original build location, that CodeBuild uses to determine where to find the raw test files.
+    - reports/<report-group>/discard-paths: Optional. Specifies if the report file directories are flattened in the output. If this is not specified, or contains no, report files are output with their directory structure intact. 
+* artifacts: Optional sequence. Represents information about where CodeBuild can find the build output and how CodeBuild prepares it for uploading to the S3 output bucket.
+    - artifacts/files: Required sequence. Represents the locations that contain the build output artifacts in the build environment.
+    - artifacts/name: Optional name. Specifies a name for your build artifact. This name is used when one of the following is true.
+    - artifacts/discard-paths: Optional. Specifies if the build artifact directories are flattened in the output. 
+    - artifacts/base-directory: Optional mapping. Represents one or more top-level directories, relative to the original build location, that CodeBuild uses to determine which files and subdirectories to include in the build output artifact.
+* cache: Optional sequence. Represents information about where CodeBuild can prepare the files for uploading cache to an S3 cache bucket. This sequence is not required if the cache type of the project is No Cache.
+    - cache/paths: Required sequence. Represents the locations of the cache. Contains a sequence of scalars, with each scalar representing a separate location where CodeBuild can find build output artifacts, relative to the original build location or, if set, the base directory. 
+
+##### Phases
+
+    
 # CodeStar
 
 # CodeCommit
