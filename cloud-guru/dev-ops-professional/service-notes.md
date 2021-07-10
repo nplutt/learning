@@ -401,8 +401,10 @@ The buildspec contains the following:
 * cache: Optional sequence. Represents information about where CodeBuild can prepare the files for uploading cache to an S3 cache bucket. This sequence is not required if the cache type of the project is No Cache.
     - cache/paths: Required sequence. Represents the locations of the cache. Contains a sequence of scalars, with each scalar representing a separate location where CodeBuild can find build output artifacts, relative to the original build location or, if set, the base directory. 
 
-##### Phases
+#### Phases
+![image](https://user-images.githubusercontent.com/6731333/125178374-fcaf4680-e1a9-11eb-84e3-0858c20ba3b4.png)
 
+  
     
 # CodeStar
 
