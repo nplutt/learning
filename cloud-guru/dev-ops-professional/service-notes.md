@@ -404,8 +404,34 @@ The buildspec contains the following:
 #### Phases
 ![image](https://user-images.githubusercontent.com/6731333/125178374-fcaf4680-e1a9-11eb-84e3-0858c20ba3b4.png)
 
-  
+#### Order of Precedence
+1. Overrides passed in with the start-build command override everything
+1. Values set in the buildspec override values set in the build project
+1. Build project values are set globally but can be overridden at any point
     
 # CodeStar
+AWS CodeStar is a cloud-based service for creating, managing, and working with software development projects on AWS. You can quickly develop, build, and deploy applications on AWS with an AWS CodeStar project. An AWS CodeStar project creates and integrates AWS services for your project development toolchain. Depending on your choice of AWS CodeStar project template, that toolchain might include source control, build, deployment, virtual servers or serverless resources, and more. AWS CodeStar also manages the permissions required for project users (called team members). By adding users as team members to an AWS CodeStar project, project owners can quickly and simply grant each team member role-appropriate access to a project and its resources.
+
+It's basically a project management dashboard which gives you a single interface where you can manage everything from one place. It also offers integration with JIRA for issue tracking. 
+
+CodeStar allows you to:
+* Start new software projects on AWS in minutes using templates for web applications, web services, and more
+* Manage project access for your team: AWS CodeStar provides a central console where you can assign project team members the roles they need to access tools and resources. These permissions are applied automatically across all AWS services used in your project, so you don't need to create or manage complex IAM policies.
+* Visualize, operate, and collaborate on your projects in one place: AWS CodeStar includes a project dashboard that provides an overall view of the project, its toolchain, and important events. You can monitor the latest project activity, like recent code commits, and track the status of your code changes, build results, and deployments, all from the same webpage. You can monitor what's going on in the project from a single dashboard and drill into problems to investigate.
 
 # CodeCommit
+AWS CodeCommit is a version control service hosted by Amazon Web Services that you can use to privately store and manage assets (such as documents, source code, and binary files) in the cloud.
+
+#### Integrations
+* Amplify
+* Cloud9
+* CloudTrail
+* CloudWatch Events
+* CodeBuild
+* CodeGuru
+* CodePipeline
+* CodeStar
+* Elastic Beanstalk
+* KMS
+* Lambda
+* SNS
