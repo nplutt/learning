@@ -44,23 +44,15 @@ containers inside the Namespace.
 * default section: sets the default limits for a container in a pod. If a container doesn't explicitly set the limits then
 these values will be applied to the container.
 * defaultRequest: sets the default requests for a container in a pod
-* max section: sets the amximum limits that a container in a pod can set
+* max section: sets the maximum limits that a container in a pod can set
 * min section: sets the minimum limits that a container in a pod can set
 
-## Network Policies
-In order to control traffic flow at the IP or port level (layer 3 or 4), then consider using Kubernetes 
-NetworkPolicies for particular applications in your cluster. NetworkPolicies are an application centric
-construct which allows you to specify how a pod is allowed to communicate with various network entities.
-
-Entities that a Pod can communicate with are identifies through a combo of the following 3 identifiers:
-1. Other pods that are allowed (exception: a pod cannot block access to itself)
-1. Namespaces that are allowed
-1. IP blocks (exception: traffic to and from the node where a Pod is running is always allowed, regardless of the Pod or node)
-
-IP blocks are identified via CIDR blocks
-
-
-
 ## More Reading
-- Kubernetes aware CD system called spinnaker
 - Namespace network policies
+
+## Notes
+- Could be nice to have one namespace to make service discovery easier
+
+Isto vs Namespace to make public or private
+* One private & one public load balancer 
+* Isto may supersede some of the namespace networking options
