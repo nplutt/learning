@@ -435,3 +435,6 @@ AWS CodeCommit is a version control service hosted by Amazon Web Services that y
 * KMS
 * Lambda
 * SNS
+
+- https://docs.aws.amazon.com/autoscaling/ec2/userguide/lifecycle-hooks.html
+- https://docs.aws.amazon.com/opsworks/latest/userguide/workingcookbook-events.html
